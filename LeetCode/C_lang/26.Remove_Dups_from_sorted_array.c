@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <string.h>
+#include "problems.h"
 
 #define TABLE_SIZE 100
 #define DEFAULT (unsigned int)0xAA7AAAAAAAAA

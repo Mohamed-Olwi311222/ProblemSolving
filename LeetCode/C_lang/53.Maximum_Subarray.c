@@ -1,8 +1,5 @@
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
+#include "problems.h"
+
 #define DEBUG (printf("i = %i, start = %i, end = %i\n", i, start, end))
 #define SUM (printf("Sum = %i\n",sum))
 int sumofarray(int *arr, int size)

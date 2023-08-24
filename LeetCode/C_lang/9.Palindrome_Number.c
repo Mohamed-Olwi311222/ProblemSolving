@@ -1,6 +1,4 @@
-#include <string.h>
-#include <stdio.h>
-#include <stdbool.h>
+#include "problems.h"
 void rev_str(char *s);
 bool isPalindrome(int x)
 {
