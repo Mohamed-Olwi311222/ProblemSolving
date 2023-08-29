@@ -67,7 +67,7 @@ void printList(ListNode *head)
   }
   printf("\n");
 }
-int main(void)
+/*int main(void)
 {
     ListNode *head = NULL;
     head = createNode(1);
@@ -79,3 +79,4 @@ int main(void)
     deleteDuplicates(head); 
     printList(head);
 }
+*/

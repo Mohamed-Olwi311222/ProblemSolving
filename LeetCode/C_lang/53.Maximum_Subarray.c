@@ -51,7 +51,7 @@ if (numsSize == 1)
     sum = subarrayfun(nums,subarray, start,sub_len);
     return (sum);
 }
-int main(void)
+/*int main(void)
 {
     int nums[] = {5,4,-1,7,8};
     // int nums[] = {-2,1,-3,4,-1,2,1,-5,4};
@@ -62,4 +62,4 @@ int main(void)
     int sum = maxSubArray(ptr, size);
     printf("\n%i\n", sum);
     return (0);
-}
+}*/

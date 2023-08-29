@@ -47,7 +47,7 @@ int removeDuplicates(int* nums, int numsSize)
     free(newarray);
     return (j);
 }
-int main(void)
+/*int main(void)
 {
     int nums[] = {-3,-1,-1,0,0,0,0,0,2};
     int numsSize = sizeof(nums) / sizeof(nums[0]);
@@ -60,4 +60,4 @@ int main(void)
     // int value = -3;
     // unsigned int address = abs(value % TABLE_SIZE);
     // printf("%d\n", address);
-}
+}*/

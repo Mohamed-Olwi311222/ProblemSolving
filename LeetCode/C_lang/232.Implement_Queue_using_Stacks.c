@@ -137,7 +137,7 @@ void myQueueFree(MyQueue* obj) {
     free(obj);
 }
 /*---------------------------------QueueEnd-----------------------------------------------*/
-
+/*
 int main(void)
 {
     int x, param_2;
@@ -163,7 +163,7 @@ int main(void)
     bool param_4 = myQueueEmpty(obj);
  
     myQueueFree(obj);
-}
+}*/
 /**
  * Your MyQueue struct will be instantiated and called as such:
  * MyQueue* obj = myQueueCreate();

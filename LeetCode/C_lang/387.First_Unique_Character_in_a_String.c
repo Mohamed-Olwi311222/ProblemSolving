@@ -116,6 +116,7 @@ int firstUniqChar(char * s)
     
     return (-1);
 }
+/*
 int main(void)
 {
     char *s = "loveleetcode";
@@ -124,3 +125,4 @@ int main(void)
     num = firstUniqChar(s);
     printf("num: %d\n", num);    
 }
+*/
