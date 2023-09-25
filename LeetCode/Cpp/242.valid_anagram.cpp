@@ -1,7 +1,4 @@
-#include <iostream>
-#include <string>
-#include <algorithm>
-
+#include "problems.h"
 using namespace std;
 
 class Solution {
