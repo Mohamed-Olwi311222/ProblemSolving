@@ -1,173 +1,122 @@
 #include "problems.h"
-
-// Define valid pairs of brackets
-char opened[] = {'{', '(', '['};
-char closed[] = {'}', ')', ']'};
-
-// Define the stack structure
-typedef struct stack {
-    char bracket;
-    struct stack *next;
-    struct stack *prev;
+typedef struct list
+{
+    char val;
+    struct list *next;
+}node;
+typedef struct stack_t
+{
+    int len;
+    node *top;
 } stack_t;
 
-// Function to create a new stack node
-stack_t *create_new_node(char brack) {
-    stack_t *newnode = malloc(sizeof(stack_t));
-    
-    if (!newnode) {
-        return NULL;
+node *create_new_node(char val)
+{
+    node *newnode = malloc(sizeof(node));
+
+    if (newnode == NULL)
+    {
+        return (NULL);
     }
-    newnode->bracket = brack;
+    newnode->val = val;
     newnode->next = NULL;
-    newnode->prev = NULL;
-    return newnode;
+    return (newnode);
 }
 
-// Function to push a bracket onto the stack
-void push(stack_t **stack, stack_t **bottom, char brack) {
-    stack_t *newnode = create_new_node(brack);
-    
-    if (!newnode) {
+void push(stack_t *stack, char val)
+{
+    node *newnode = create_new_node(val);
+
+    if (stack->top == NULL)
+    {
+	stack->len++;
+        stack->top = newnode;
         return;
     }
-    
-    if (!(*stack)) {
-        *bottom = newnode;
-        *stack = newnode;
-    } else {
-        (*stack)->prev = newnode;
-        newnode->next = *stack;
-        *stack = newnode;
-    }
+    newnode->next = stack->top;
+    stack->top = newnode;
+    stack->len++;
 }
 
-// Function to pop the top element from the stack
-stack_t *pop(stack_t *stack) {
-    stack_t *curr = NULL; 
+char pop(stack_t *stack)
+{
+    node *top_node = stack->top;
+    char data;
 
-    if (!stack) {
+    if (stack->top == NULL || stack->top->val == NULL)
+    {
         return (NULL);
     }
-    if (stack->next == NULL)
-    {
-        free(stack);
-    }
-    else
-    {
-        curr = stack;
-        stack = stack->next;
-        free(curr);
-    }
-    return (stack);
+    data = top_node->val;
+    stack->top = top_node->next;
+    free(top_node);
+    stack->len--;
+    return(data);
 }
 
-// Function to pop the bottom element from the stack
-stack_t *pop_bottom(stack_t *bottom, stack_t *stack) {
-    stack_t *curr = NULL;
-
-    if (!bottom) {
-        return (NULL);
-    }
-
-    curr = bottom;
-    if (bottom == stack) {
-        free(stack);
-        stack = NULL;
-        bottom = NULL;
-    } else {
-        bottom = bottom->prev;
-        free(curr);
-    }
-    
-    return (bottom);
-}
-
-// Function to look up the top element of the stack
-int look_up(stack_t *stack)
+char peek(stack_t *stack)
 {
-    if (!stack)
+    char data;
+
+    if (stack == NULL || stack->top == NULL)
     {
-        return (-1);
+        return(NULL);
     }
-    if (closed[0] == stack->bracket)
-    {
-        return (0);
-    }
-    else if (closed[1] == stack->bracket)
-    {
-        return (1);
-    }
-    else
-    {
-        return (2);
-    }
+    data = stack->top->val;
+    return(data);
 }
 
-// Function to check if a character matches the bottom element
-int look_bottom(stack_t *bottom) {
-    if (!bottom) {
-        return (-1);
-    }
-    if (opened[0] == bottom->bracket)
-    {
-        return (0);
-    }
-    else if (opened[1] == bottom->bracket)
-    {
-        return (1);
-    }
-    else
-    {
-        return (2);
-    }
-}
-bool compare_top_and_bottom(stack_t *bottom,stack_t *top)
+void free_stack(stack_t *stack)
 {
-    int b = look_bottom(bottom);
-    int t = look_up(top);
-
-    /*Same address then its only one node pushed*/
-    if (bottom == top)
+    int i;
+    for (i = 0; i < stack->len; i++)
     {
-        return (false);
+        pop(stack);
     }
-    if (b == t && b != -1)
-    {
-        return (true);
-    }
-    return (false);
-}
-// Function to free the entire stack
-void free_stack(stack_t **stack) {
-    while (pop(*stack));
 }
 
-// Function to validate bracket expressions
-bool isValid(char *s) {
-    stack_t *stack = NULL, *bottom = NULL;
-    int len = strlen(s), i;
+bool check(stack_t stack, char s)
+{
+    char closed[3] = {'}', ')', ']'};
+    char opened[3] = {'{', '(', '['};
+    int i;
 
-    // push(&stack, &bottom, s[0]);
-    for (i = 0; i < len; i++) {
-        push(&stack, &bottom, s[i]);
-        if (compare_top_and_bottom(bottom, stack))
+    for (i = 0; i < 3; i++)
+    {
+        if (closed[i] == s && opened[i] == peek(&stack))
         {
-           stack = pop_bottom(bottom, stack);
-           bottom = pop(stack);
+            return(true);
         }
     }
-    
-    if (stack != NULL) {
-        free_stack(&stack);
-        return false;
-    } else {
-        return true;
-    }
+    return(false);
 }
 
+bool isValid(char* s) {
+    stack_t stack;
+    int len = strlen(s);
+    int i;
+    stack.len = 0;
+    stack.top = NULL;
+    push(&stack, s[0]);
+    for (i = 1; i < len; i++)
+    {
+        if (check(stack, s[i]))
+        {
+            pop(&stack);
+            
+        }
+	else
+	{
+		push(&stack, s[i]);
+	}
+    }
+    if (stack.len == 0)
+	    return(true);
+    free_stack(&stack);
+    return(false);
+}
 int main(void) {
-    char *s = "()"; 
+    char *s = "{[]}"; 
     printf("%d\n", isValid(s));
     return 0;
 }
