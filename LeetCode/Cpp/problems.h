@@ -9,4 +9,5 @@
 #include <cstring>
 #include <algorithm>
 #include <vector>
+#include <math.h>
 #endif /*PROBLEMS_H*/
